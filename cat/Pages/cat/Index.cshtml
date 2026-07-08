@@ -1,0 +1,306 @@
+﻿@page "/catalog"
+@model cat.Pages.cat.IndexModel
+
+@{
+    ViewData["Title"] = "каталог";
+}
+
+<nav class="navbar navbar-expand-lg bg-warning mb-4">
+    <div class="container">
+        <a class="navbar-brand text-danger fw-bold" href="/">вбшка</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/catalog">Каталог</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Фильтры</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Категории</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="catElectronics">
+                            <label class="form-check-label" for="catElectronics">Электроника</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="catClothing">
+                            <label class="form-check-label" for="catClothing">Одежда</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="catFood">
+                            <label class="form-check-label" for="catFood">Еда</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="catPets">
+                            <label class="form-check-label" for="catPets">Питомцы</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="catBooks">
+                            <label class="form-check-label" for="catBooks">Книги</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="catShoes">
+                            <label class="form-check-label" for="catShoes">Обувь</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Цена</label>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="number" class="form-control" placeholder="От">
+                            </div>
+                            <div class="col-6">
+                                <input type="number" class="form-control" placeholder="До">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary w-100">Применить фильтры</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-9">
+            <h1>каталог</h1>
+            <div class="d-lg-none mb-3">
+                <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">Показать фильтры</button>
+            </div>
+            <div id="productsContainer"></div>
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center" id="paginationControls"></ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="filterOffcanvas">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Фильтры</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="mb-3">
+            <label class="form-label fw-bold">Категории</label>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="offcanvasCatElectronics">
+                <label class="form-check-label" for="offcanvasCatElectronics">Электроника</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="offcanvasCatClothing">
+                <label class="form-check-label" for="offcanvasCatClothing">Одежда</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="offcanvasCatFood">
+                <label class="form-check-label" for="offcanvasCatFood">Еда</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="offcanvasCatPets">
+                <label class="form-check-label" for="offcanvasCatPets">Питомцы</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="offcanvasCatBooks">
+                <label class="form-check-label" for="offcanvasCatBooks">Книги</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="offcanvasCatShoes">
+                <label class="form-check-label" for="offcanvasCatShoes">Обувь</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label fw-bold">Цена</label>
+            <div class="row g-2">
+                <div class="col-6"><input type="number" class="form-control" placeholder="От"></div>
+                <div class="col-6"><input type="number" class="form-control" placeholder="До"></div>
+            </div>
+        </div>
+        <button class="btn btn-primary w-100">Применить фильтры</button>
+    </div>
+</div>
+
+<div class="modal fade" id="quickViewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quickViewTitle">Быстрый просмотр</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="quickViewBody">
+                <p>Загрузка...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">закрыть</button>
+                <button type="button" class="btn btn-primary" id="quickViewAddToCart">положить в корзину</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div class="toast" id="cartToast" role="alert">
+        <div class="toast-header">
+            <strong class="me-auto">корзина</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">Товар добавлен в корзину</div>
+    </div>
+</div>
+
+<footer class="bg-light mt-5 py-3 text-center">
+    <p class="mb-0">габидуллина</p>
+</footer>
+
+@section Scripts {
+    <script>
+        var allProducts = [
+            @foreach (var i in Model.Products)
+            {
+                <text>
+                {
+                    Name: "@i.Name",
+                    Description: "@i.Description",
+                    Category: "@i.Category",
+                    Price: "@i.Price.ToString()",
+                    Image: "@i.Image"
+                },
+                </text>
+            }
+        ];
+
+        var itemsPerPage = 6;
+        var currentPage = 1;
+
+        function renderProducts() {
+            var start = (currentPage - 1) * itemsPerPage;
+            var end = start + itemsPerPage;
+            var pageProducts = allProducts.slice(start, end);
+
+            var html = '<div class="row">';
+            for (var i = 0; i < pageProducts.length; i++) {
+                var p = pageProducts[i];
+                html += `
+                    <div class="col-12 col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <img src="${p.Image}" class="card-img-top" alt="${p.Name}" style="height: 300px; object-fit: cover; cursor: pointer;" 
+                                 data-bs-toggle="modal" data-bs-target="#quickViewModal"
+                                 data-name="${p.Name}" data-desc="${p.Description}" 
+                                 data-category="${p.Category}" data-price="${p.Price}" data-img="${p.Image}">
+                            <div class="card-body">
+                                <h5 class="card-title">${p.Name}</h5>
+                                <p class="card-text">${p.Description}</p>
+                                <p class="card-text">${p.Category}</p>
+                                <p class="card-text fw-bold">${p.Price}</p>
+                                <button class="btn btn-primary w-100 add-to-cart" data-bs-toggle="tooltip" data-bs-title="Добавить в корзину">купить</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+            document.getElementById('productsContainer').innerHTML = html;
+            document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(el) {
+                new bootstrap.Tooltip(el);
+            });
+        }
+
+        function renderPagination() {
+            var totalPages = Math.ceil(allProducts.length / itemsPerPage);
+            var paginationHtml = '';
+            
+            paginationHtml += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="#" data-page="prev">Предыдущая</a>
+            </li>`;
+            
+            for (var i = 1; i <= totalPages; i++) {
+                paginationHtml += `<li class="page-item ${currentPage === i ? 'active' : ''}">
+                    <a class="page-link" href="#" data-page="${i}">${i}</a>
+                </li>`;
+            }
+            
+            paginationHtml += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                <a class="page-link" href="#" data-page="next">Следующая</a>
+            </li>`;
+            
+            document.getElementById('paginationControls').innerHTML = paginationHtml;
+        }
+
+        function changePage(page) {
+            var totalPages = Math.ceil(allProducts.length / itemsPerPage);
+            if (page === 'prev') {
+                if (currentPage > 1) currentPage--;
+            } else if (page === 'next') {
+                if (currentPage < totalPages) currentPage++;
+            } else if (typeof page === 'number') {
+                currentPage = page;
+            }
+            renderProducts();
+            renderPagination();
+        }
+        document.addEventListener('click', function(e) {
+            var target = e.target.closest('.page-link');
+            if (target && target.dataset.page) {
+                e.preventDefault();
+                var page = target.dataset.page;
+                if (page === 'prev' || page === 'next') {
+                    changePage(page);
+                } else {
+                    changePage(parseInt(page));
+                }
+            }
+        });
+        document.getElementById('productsContainer').addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
+                var toast = new bootstrap.Toast(document.getElementById('cartToast'));
+                toast.show();
+            }
+        });
+        var quickViewModal = document.getElementById('quickViewModal');
+        quickViewModal.addEventListener('show.bs.modal', function(event) {
+            var img = event.relatedTarget;
+            var name = img.getAttribute('data-name');
+            var desc = img.getAttribute('data-desc');
+            var category = img.getAttribute('data-category');
+            var price = img.getAttribute('data-price');
+            var image = img.getAttribute('data-img');
+
+            document.getElementById('quickViewTitle').innerText = name;
+            document.getElementById('quickViewBody').innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="${image}" class="img-fluid" alt="${name}">
+                    </div>
+                    <div class="col-md-6">
+                        <h4>${name}</h4>
+                        <p>${desc}</p>
+                        <p><strong>Категория:</strong> ${category}</p>
+                        <p><strong>Цена:</strong> ${price}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        document.getElementById('quickViewAddToCart').addEventListener('click', function() {
+            var toast = new bootstrap.Toast(document.getElementById('cartToast'));
+            toast.show();
+            var modal = bootstrap.Modal.getInstance(quickViewModal);
+            modal.hide();
+        });
+        renderProducts();
+        renderPagination();
+    </script>
+}
