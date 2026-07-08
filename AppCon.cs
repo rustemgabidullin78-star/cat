@@ -1,0 +1,1 @@
+"public class AppCon {public string DbConnection = \"new\";}"
