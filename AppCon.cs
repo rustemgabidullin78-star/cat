@@ -1,1 +1,1 @@
-"public class AppCon {public string DbConnection = \"new\";}"
+public class AppCon {public string DbConnection = \"new\";}
